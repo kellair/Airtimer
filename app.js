@@ -13,12 +13,13 @@ const buttonLabels = ["Offblock", "Takeoff", "Landing", "Onblock"];
 // Funktion zur Umstellung der Zeitzone
 function getTimeString(date, local) {
     if (local) {
-        const options = { timeZone: 'Europe/Zurich', hour: '2-digit', minute: '2-digit', hour12: false };
-        return date.toLocaleTimeString('de-CH', options);
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        return `${hours}:${minutes} LT`;
     } else {
         const hours = String(date.getUTCHours()).padStart(2, '0');
         const minutes = String(date.getUTCMinutes()).padStart(2, '0');
-        return `${hours}:${minutes}`;
+        return `${hours}:${minutes} UTC`;
     }
 }
 
@@ -37,7 +38,7 @@ switchInput.addEventListener('change', () => {
 // Event Listener für den Zeitstempel-Button hinzufügen
 zeitButton.addEventListener('click', () => {
     const now = new Date();
-    const utcTimeString = getTimeString(now, false) + " UTC";
+    const utcTimeString = getTimeString(now, false);
     const localTimeString = getTimeString(now, true);
 
     const listItem = document.createElement('li');
