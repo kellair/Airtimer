@@ -52,11 +52,11 @@
             background: #666; /* Darker grey for hover effect */
         }
 
-        .save-button {
-            background: #1E8BD5; /* Blue color for save button */
+        .switch-button {
+            background: #1E8BD5; /* Blue color for switch button */
         }
 
-        .save-button:hover {
+        .switch-button:hover {
             background: #196CB1; /* Darker blue for hover effect */
         }
 
@@ -117,21 +117,22 @@
     </div>
     <button id="zeitButton">Offblock</button>
     <button id="clearButton" class="clear-button">Clear All</button>
-    <button id="saveButton" class="save-button">Save as Image</button> <!-- Neu hinzugefügt -->
+    <button id="switchButton" class="switch-button">Switch Time</button> <!-- Neu hinzugefügter Switch-Button -->
 
     <script>
         const zeitButton = document.getElementById('zeitButton');
         const clearButton = document.getElementById('clearButton');
-        const saveButton = document.getElementById('saveButton'); // Neu hinzugefügt
+        const switchButton = document.getElementById('switchButton'); // Neu hinzugefügter Switch-Button
         const timeList = document.getElementById('zeitListe');
         let clickCount = 0;
+        let useLocalTime = false; // Variable zur Bestimmung, ob lokale Zeit verwendet werden soll
         const buttonLabels = ["Offblock", "Takeoff", "Landing", "Onblock"];
 
         zeitButton.addEventListener('click', () => {
-            const now = new Date();
+            const now = useLocalTime ? new Date() : new Date(Date.now() + new Date().getTimezoneOffset() * 60000); // Umstellung auf die lokale Zeit
             const hours = String(now.getUTCHours()).padStart(2, '0');
             const minutes = String(now.getUTCMinutes()).padStart(2, '0');
-            const timeString = `${hours}:${minutes} UTC`;
+            const timeString = `${hours}:${minutes} ${useLocalTime ? 'LT' : 'UTC'}`; // Anzeige der umgestellten Zeit.
 
             const listItem = document.createElement('li');
             listItem.innerHTML = `<span>${buttonLabels[clickCount]}:</span> ${timeString}`;
@@ -147,20 +148,12 @@
             zeitButton.textContent = buttonLabels[clickCount];
         });
 
-        // Event Listener für den Speichern-Button hinzufügen (neu)
-        saveButton.addEventListener('click', () => {
-            const container = document.querySelector('.container');
-            html2canvas(container).then(canvas => {
-                // Bild als Datei speichern oder weiterverarbeiten
-                const imageDataURL = canvas.toDataURL('image/png');
-                const downloadLink = document.createElement('a');
-                downloadLink.href = imageDataURL;
-                downloadLink.download = 'airtimer_snapshot.png';
-                downloadLink.click();
-            });
+        switchButton.addEventListener('click', () => {
+            useLocalTime = !useLocalTime; // Umstellung zwischen UTC und der Lokalzeit.
+            switchButton.textContent = useLocalTime ? 'Switch to UTC' : 'Switch to Local Time';
         });
 
-        // Service Worker registration
+        // Service Worker registrieren
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/service-worker.js')
