@@ -10,6 +10,7 @@ body {
     margin: 0;
     background: #E0E0E0; /* Light grey background similar to Swiss website */
     color: #333; /* Darker text color for better readability */
+    overflow: hidden; /* Hide browser UI */
 }
 
 button {
@@ -70,4 +71,21 @@ li {
 
 li span {
     font-weight: bold;
+}
+
+/* Prevent zooming and hide browser UI */
+html {
+    touch-action: manipulation;
+    -ms-touch-action: manipulation;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -ms-content-zooming: none;
+    -ms-touch-action: none;
+}
+
+/* Hide browser UI */
+body {
+    overflow: hidden;
 }

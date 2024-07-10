@@ -4,7 +4,9 @@ const urlsToCache = [
     '/',
     '/index.html', // Adjust path if necessary
     '/styles.css', // Adjust path if necessary
-    '/app.js' // Adjust path if necessary
+    '/app.js', // Adjust path if necessary
+    '/offline.html', // Adjust path if necessary
+    '/favicon.ico' // Example of other resources
 ];
 
 self.addEventListener('install', event => {
@@ -17,6 +19,14 @@ self.addEventListener('install', event => {
 self.addEventListener('fetch', event => {
     event.respondWith(
         caches.match(event.request)
-            .then(response => response || fetch(event.request))
+            .then(response => {
+                // If resource is in cache, return it
+                if (response) {
+                    return response;
+                }
+                // Otherwise, try fetching from network
+                return fetch(event.request)
+                    .catch(() => caches.match('/offline.html')); // Show offline page on network failure
+            })
     );
 });
