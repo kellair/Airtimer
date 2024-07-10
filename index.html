@@ -9,7 +9,158 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <title>Airtimer</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Courier Prime', monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background: #E0E0E0; /* Light grey background similar to Swiss website */
+            color: #333; /* Darker text color for better readability */
+            overflow: hidden; /* Hide browser UI */
+        }
+
+        button {
+            width: 80%;
+            max-width: 400px;
+            padding: 15px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            background: #D52B1E; /* Swiss red */
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s;
+            margin-bottom: 10px;
+        }
+
+        button:hover {
+            background: #B12419; /* Darker red for hover effect */
+        }
+
+        .clear-button {
+            background: #848884; /* Grey color for clear button */
+        }
+
+        .clear-button:hover {
+            background: #666; /* Darker grey for hover effect */
+        }
+
+        .container {
+            width: 80%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: white;
+            padding: 10px;
+            position: relative;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            width: 100%;
+            margin: 0;
+        }
+
+        li {
+            background: #fff; /* White background for list items */
+            padding: 15px;
+            text-align: center;
+            font-size: 16px;
+            border-bottom: 1px dashed #333; /* Dashed line to simulate a receipt */
+            margin: 0;
+        }
+
+        li span {
+            font-weight: bold;
+        }
+
+        /* Toggle Switch styles */
+        .switch-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .switch-label {
+            font-size: 18px;
+            margin-right: 10px;
+        }
+
+        .switch-button {
+            background: #1E8BD5; /* Blue color for switch button */
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+            margin: 0 10px;
+            border-radius: 34px;
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.3s;
+        }
+
+        .switch-button input {
+            display: none;
+        }
+
+        .switch-button span {
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: white;
+            border-radius: 34px;
+            transition: transform 0.3s;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .switch-button span:before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50%;
+            height: 50%;
+            background-color: #D52B1E; /* Swiss red */
+            border-radius: 34px;
+            transition: transform 0.3s;
+        }
+
+        .switch-button input:checked + span:before {
+            transform: translateX(100%);
+            background-color: #1E8BD5; /* Blue color for switch button */
+        }
+
+        /* Prevent zooming and hide browser UI */
+        html {
+            touch-action: manipulation;
+            -ms-touch-action: manipulation;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -ms-content-zooming: none;
+            -ms-touch-action: none;
+        }
+
+        /* Hide browser UI */
+        body {
+            overflow: hidden;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -17,10 +168,14 @@
     </div>
     <button id="zeitButton">Offblock</button>
     <button id="clearButton" class="clear-button">Clear All</button>
-    <label class="switch-button">
-        <input id="timeToggle" type="checkbox">
-        <span></span>
-    </label>
+    <div class="switch-container">
+        <span class="switch-label">Local Time</span>
+        <label class="switch-button">
+            <input id="timeToggle" type="checkbox">
+            <span></span>
+        </label>
+        <span class="switch-label">UTC</span>
+    </div>
 
     <script src="app.js"></script>
 </body>
