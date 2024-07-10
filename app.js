@@ -1,52 +1,18 @@
-// app.js oder script.js
-
-// DOM-Elemente abrufen
 const zeitButton = document.getElementById('zeitButton');
 const clearButton = document.getElementById('clearButton');
+const switchInput = document.getElementById('timeToggle');
 const timeList = document.getElementById('zeitListe');
-const switchInput = document.getElementById('timeToggle'); // Neu hinzugefügt
 let clickCount = 0;
-let displayLocalTime = false; // Flag für die Anzeige der Local Time
-
+let useLocalTime = false; // Variable zur Bestimmung, ob lokale Zeit verwendet werden soll
 const buttonLabels = ["Offblock", "Takeoff", "Landing", "Onblock"];
 
-// Funktion zur Umstellung der Zeitzone
-function getTimeString(date, local) {
-    if (local) {
-        const hours = String(date.getHours()).padStart(2, '0');
-        const minutes = String(date.getMinutes()).padStart(2, '0');
-        return `${hours}:${minutes} LT`;
-    } else {
-        const hours = String(date.getUTCHours()).padStart(2, '0');
-        const minutes = String(date.getUTCMinutes()).padStart(2, '0');
-        return `${hours}:${minutes} UTC`;
-    }
-}
-
-// Event Listener für den Toggle-Switch hinzufügen
-switchInput.addEventListener('change', () => {
-    displayLocalTime = switchInput.checked;
-
-    // Aktualisiere die Anzeige der Zeiten basierend auf der ausgewählten Zeitzone
-    const listItems = timeList.querySelectorAll('li');
-    listItems.forEach(item => {
-        const timeString = item.getAttribute(displayLocalTime ? 'data-local-time' : 'data-utc-time');
-        item.innerHTML = `<span>${item.dataset.buttonLabel}:</span> ${timeString}`;
-    });
-});
-
-// Event Listener für den Zeitstempel-Button hinzufügen
 zeitButton.addEventListener('click', () => {
-    const now = new Date();
-    const utcTimeString = getTimeString(now, false);
-    const localTimeString = getTimeString(now, true);
+    const now = useLocalTime ? new Date() : new Date(new Date().toUTCString()); // Umstellung auf die lokale Zeit
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const timeString = `${hours}:${minutes} ${useLocalTime ? 'LT' : 'UTC'}`; // Anzeige der umgestellten Zeit.
 
     const listItem = document.createElement('li');
-    listItem.dataset.buttonLabel = buttonLabels[clickCount];
-    listItem.setAttribute('data-utc-time', utcTimeString);
-    listItem.setAttribute('data-local-time', localTimeString);
-
-    const timeString = displayLocalTime ? localTimeString : utcTimeString;
     listItem.innerHTML = `<span>${buttonLabels[clickCount]}:</span> ${timeString}`;
     timeList.appendChild(listItem);
 
@@ -54,10 +20,14 @@ zeitButton.addEventListener('click', () => {
     zeitButton.textContent = buttonLabels[clickCount];
 });
 
-// Event Listener für den Clear-Button hinzufügen
 clearButton.addEventListener('click', () => {
     timeList.innerHTML = '';
     clickCount = 0;
+    zeitButton.textContent = buttonLabels[clickCount];
+});
+
+switchInput.addEventListener('change', () => {
+    useLocalTime = switchInput.checked; // Umstellung zwischen UTC und der Lokalzeit.
     zeitButton.textContent = buttonLabels[clickCount];
 });
 
