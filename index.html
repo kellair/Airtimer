@@ -103,7 +103,6 @@
             display: inline-block;
             width: 60px;
             height: 34px;
-            margin: 0 10px;
             border-radius: 34px;
             cursor: pointer;
             user-select: none;
@@ -131,17 +130,17 @@
             content: '';
             position: absolute;
             top: 50%;
-            transform: translateY(-50%);
-            width: 50%;
-            height: 50%;
+            left: 4px;
+            width: 26px;
+            height: 26px;
             background-color: #D52B1E; /* Swiss red */
-            border-radius: 34px;
+            border-radius: 50%;
+            transform: translateY(-50%);
             transition: transform 0.3s;
         }
 
         .switch-button input:checked + span:before {
-            transform: translateX(100%);
-            background-color: #1E8BD5; /* Blue color for switch button */
+            transform: translate(26px, -50%);
         }
 
         /* Prevent zooming and hide browser UI */
@@ -169,12 +168,12 @@
     <button id="zeitButton">Offblock</button>
     <button id="clearButton" class="clear-button">Clear All</button>
     <div class="switch-container">
-        <span class="switch-label">Local Time</span>
+        <span class="switch-label">UTC</span>
         <label class="switch-button">
             <input id="timeToggle" type="checkbox">
             <span></span>
         </label>
-        <span class="switch-label">UTC</span>
+        <span class="switch-label">Local Time</span>
     </div>
 
     <script src="app.js"></script>
