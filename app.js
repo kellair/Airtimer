@@ -4,15 +4,27 @@
 const zeitButton = document.getElementById('zeitButton');
 const clearButton = document.getElementById('clearButton');
 const timeList = document.getElementById('zeitListe');
-const toggleTimezoneBtn = document.getElementById('toggleTimezoneBtn'); // Neu hinzugefügt
+const switchInput = document.getElementById('timeToggle'); // Neu hinzugefügt
 let clickCount = 0;
 let displayLocalTime = false; // Flag für die Anzeige der Local Time
 
 const buttonLabels = ["Offblock", "Takeoff", "Landing", "Onblock"];
 
-// Event Listener für den Button zum Umschalten der Zeitzone hinzufügen
-toggleTimezoneBtn.addEventListener('click', () => {
-    displayLocalTime = !displayLocalTime; // Umschalten zwischen LT und UTC
+// Funktion zur Umstellung der Zeitzone
+function getTimeString(date, local) {
+    if (local) {
+        const options = { timeZone: 'Europe/Zurich', hour: '2-digit', minute: '2-digit', hour12: false };
+        return date.toLocaleTimeString('de-CH', options);
+    } else {
+        const hours = String(date.getUTCHours()).padStart(2, '0');
+        const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+        return `${hours}:${minutes}`;
+    }
+}
+
+// Event Listener für den Toggle-Switch hinzufügen
+switchInput.addEventListener('change', () => {
+    displayLocalTime = switchInput.checked;
 
     // Aktualisiere die Anzeige der Zeiten basierend auf der ausgewählten Zeitzone
     const listItems = timeList.querySelectorAll('li');
@@ -25,13 +37,8 @@ toggleTimezoneBtn.addEventListener('click', () => {
 // Event Listener für den Zeitstempel-Button hinzufügen
 zeitButton.addEventListener('click', () => {
     const now = new Date();
-    const utcHours = String(now.getUTCHours()).padStart(2, '0');
-    const utcMinutes = String(now.getUTCMinutes()).padStart(2, '0');
-    const utcTimeString = `${utcHours}:${utcMinutes} UTC`;
-
-    const localHours = String(now.getHours()).padStart(2, '0');
-    const localMinutes = String(now.getMinutes()).padStart(2, '0');
-    const localTimeString = `${localHours}:${localMinutes}`;
+    const utcTimeString = getTimeString(now, false) + " UTC";
+    const localTimeString = getTimeString(now, true);
 
     const listItem = document.createElement('li');
     listItem.dataset.buttonLabel = buttonLabels[clickCount];
@@ -53,20 +60,15 @@ clearButton.addEventListener('click', () => {
     zeitButton.textContent = buttonLabels[clickCount];
 });
 
-// Funktion zum Hinzufügen eines Zeitstempels (optional)
-function addTimestamp(buttonLabel, timestamp) {
-    const listItem = document.createElement('li');
-    const utcTimeString = `${timestamp.getUTCHours().toString().padStart(2, '0')}:${timestamp.getUTCMinutes().toString().padStart(2, '0')}`;
-    const localTimeString = `${timestamp.getHours().toString().padStart(2, '0')}:${timestamp.getMinutes().toString().padStart(2, '0')}`;
-
-    listItem.dataset.buttonLabel = buttonLabel;
-    listItem.setAttribute('data-utc-time', `${utcTimeString} UTC`);
-    listItem.setAttribute('data-local-time', localTimeString);
-
-    const timeString = displayLocalTime ? localTimeString : `${utcTimeString} UTC`;
-    listItem.innerHTML = `<span>${buttonLabel}:</span> ${timeString}`;
-    timeList.appendChild(listItem);
+// Service Worker registrieren
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js')
+            .then(registration => {
+                console.log('Service Worker registered:', registration);
+            })
+            .catch(error => {
+                console.error('Service Worker registration failed:', error);
+            });
+    });
 }
-
-// Beispiel für das Hinzufügen eines Zeitstempels (optional)
-addTimestamp("Offblock", new Date()); // Beispiel für den aktuellen Zeitstempel
