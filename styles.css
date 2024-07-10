@@ -73,6 +73,65 @@ li span {
     font-weight: bold;
 }
 
+/* Toggle Switch styles */
+.switch-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.switch-label {
+    font-size: 18px;
+    margin-right: 10px;
+}
+
+.switch-button {
+    background: #1E8BD5; /* Blue color for switch button */
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    margin: 0 10px;
+    border-radius: 34px;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.3s;
+}
+
+.switch-button input {
+    display: none;
+}
+
+.switch-button span {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: white;
+    border-radius: 34px;
+    transition: transform 0.3s;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.switch-button span:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50%;
+    height: 50%;
+    background-color: #D52B1E; /* Swiss red */
+    border-radius: 34px;
+    transition: transform 0.3s;
+}
+
+.switch-button input:checked + span:before {
+    transform: translateX(100%);
+    background-color: #1E8BD5; /* Blue color for switch button */
+}
+
 /* Prevent zooming and hide browser UI */
 html {
     touch-action: manipulation;
