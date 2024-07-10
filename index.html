@@ -54,10 +54,49 @@
 
         .switch-button {
             background: #1E8BD5; /* Blue color for switch button */
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+            margin: 10px;
+            border-radius: 34px;
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.3s;
         }
 
-        .switch-button:hover {
-            background: #196CB1; /* Darker blue for hover effect */
+        .switch-button input {
+            display: none;
+        }
+
+        .switch-button span {
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: white;
+            border-radius: 34px;
+            transition: transform 0.3s;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .switch-button span:before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50%;
+            height: 50%;
+            background-color: #D52B1E; /* Swiss red */
+            border-radius: 34px;
+            transition: transform 0.3s;
+        }
+
+        .switch-button input:checked + span:before {
+            transform: translateX(100%);
+            background-color: #1E8BD5; /* Blue color for switch button */
         }
 
         .container {
@@ -117,12 +156,15 @@
     </div>
     <button id="zeitButton">Offblock</button>
     <button id="clearButton" class="clear-button">Clear All</button>
-    <button id="switchButton" class="switch-button">Switch Time</button> <!-- Neu hinzugefügter Switch-Button -->
+    <label class="switch-button">
+        <input id="timeToggle" type="checkbox">
+        <span></span>
+    </label>
 
     <script>
         const zeitButton = document.getElementById('zeitButton');
         const clearButton = document.getElementById('clearButton');
-        const switchButton = document.getElementById('switchButton'); // Neu hinzugefügter Switch-Button
+        const switchInput = document.getElementById('timeToggle');
         const timeList = document.getElementById('zeitListe');
         let clickCount = 0;
         let useLocalTime = false; // Variable zur Bestimmung, ob lokale Zeit verwendet werden soll
@@ -148,9 +190,14 @@
             zeitButton.textContent = buttonLabels[clickCount];
         });
 
-        switchButton.addEventListener('click', () => {
-            useLocalTime = !useLocalTime; // Umstellung zwischen UTC und der Lokalzeit.
-            switchButton.textContent = useLocalTime ? 'Switch to UTC' : 'Switch to Local Time';
+        switchInput.addEventListener('change', () => {
+            useLocalTime = switchInput.checked; // Umstellung zwischen UTC und der Lokalzeit.
+            zeitButton.textContent = buttonLabels[clickCount];
+            if (useLocalTime) {
+                switchInput.nextElementSibling.textContent = 'Local Time'; // Anzeige der Lokalzeit.
+            } else {
+                switchInput.nextElementSibling.textContent = 'UTC'; // Anzeige der UTC-Zeit.
+            }
         });
 
         // Service Worker registrieren
