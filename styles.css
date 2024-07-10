@@ -74,17 +74,6 @@ li span {
 }
 
 /* Toggle Switch styles */
-.switch-container {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.switch-label {
-    font-size: 18px;
-    margin-right: 10px;
-}
-
 .switch-button {
     background: #1E8BD5; /* Blue color for switch button */
     position: relative;
@@ -131,6 +120,38 @@ li span {
     transform: translateX(100%);
     background-color: #1E8BD5; /* Blue color for switch button */
 }
+
+.switch-button span {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    background: #1E8BD5;
+    border-radius: 34px;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.3s;
+  }
+  
+  .switch-button input {
+    display: none;
+  }
+  
+  .switch-button span:before {
+    content: '';
+    position: absolute;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    left: 4px;
+    bottom: 4px;
+    background: white;
+    transition: transform 0.3s;
+  }
+  
+  .switch-button input:checked + span:before {
+    transform: translateX(26px);
+  }
 
 /* Prevent zooming and hide browser UI */
 html {
