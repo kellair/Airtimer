@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap');
+
+body {
+    font-family: 'Courier Prime', monospace;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    background: #E0E0E0; /* Light grey background similar to Swiss website */
+    color: #333; /* Darker text color for better readability */
+}
+
+button {
+    width: 80%;
+    max-width: 400px;
+    padding: 15px 30px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    background: #D52B1E; /* Swiss red */
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background 0.3s;
+    margin-bottom: 10px;
+}
+
+button:hover {
+    background: #B12419; /* Darker red for hover effect */
+}
+
+.clear-button {
+    background: #848884; /* Grey color for clear button */
+}
+
+.clear-button:hover {
+    background: #666; /* Darker grey for hover effect */
+}
+
+.container {
+    width: 80%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: white;
+    padding: 10px;
+    position: relative;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    width: 100%;
+    margin: 0;
+}
+
+li {
+    background: #fff; /* White background for list items */
+    padding: 15px;
+    text-align: center;
+    font-size: 16px;
+    border-bottom: 1px dashed #333; /* Dashed line to simulate a receipt */
+    margin: 0;
+}
+
+li span {
+    font-weight: bold;
+}
