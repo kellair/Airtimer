@@ -126,6 +126,7 @@ li {
     text-align: center;
     font-size: 16px;
     border-bottom: 1px dashed #333; /* Dashed line to simulate a receipt */
+    color: #1e1e1e;
     margin: 0;
 }
 
