@@ -3,7 +3,7 @@
 <head>
     <link rel="apple-touch-icon" sizes="192x192" href="https://raw.githubusercontent.com/kellair/Airtimer/main/192x192.png">
     <link rel="apple-touch-icon" sizes="512x512" href="https://raw.githubusercontent.com/kellair/Airtimer/main/512x512.png">
-    <link rel="apple-touch-icon" href="/https://raw.githubusercontent.com/kellair/Airtimer/main/icon.png">
+    <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/kellair/Airtimer/main/icon.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -50,6 +50,14 @@
 
         .clear-button:hover {
             background: #666; /* Darker grey for hover effect */
+        }
+
+        .save-button {
+            background: #1E8BD5; /* Blue color for save button */
+        }
+
+        .save-button:hover {
+            background: #196CB1; /* Darker blue for hover effect */
         }
 
         .container {
@@ -109,10 +117,12 @@
     </div>
     <button id="zeitButton">Offblock</button>
     <button id="clearButton" class="clear-button">Clear All</button>
+    <button id="saveButton" class="save-button">Save as Image</button> <!-- Neu hinzugefügt -->
 
     <script>
         const zeitButton = document.getElementById('zeitButton');
         const clearButton = document.getElementById('clearButton');
+        const saveButton = document.getElementById('saveButton'); // Neu hinzugefügt
         const timeList = document.getElementById('zeitListe');
         let clickCount = 0;
         const buttonLabels = ["Offblock", "Takeoff", "Landing", "Onblock"];
@@ -135,6 +145,19 @@
             timeList.innerHTML = '';
             clickCount = 0;
             zeitButton.textContent = buttonLabels[clickCount];
+        });
+
+        // Event Listener für den Speichern-Button hinzufügen (neu)
+        saveButton.addEventListener('click', () => {
+            const container = document.querySelector('.container');
+            html2canvas(container).then(canvas => {
+                // Bild als Datei speichern oder weiterverarbeiten
+                const imageDataURL = canvas.toDataURL('image/png');
+                const downloadLink = document.createElement('a');
+                downloadLink.href = imageDataURL;
+                downloadLink.download = 'airtimer_snapshot.png';
+                downloadLink.click();
+            });
         });
 
         // Service Worker registration
