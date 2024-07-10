@@ -63,18 +63,14 @@
         .switch-label {
             font-size: 18px;
             margin: 0 10px;
+            color: #aa9881; /* Beige text color */
         }
 
         .switch-button {
-            background: #676767; /* Grey color for switch button */
             position: relative;
             display: inline-block;
             width: 60px;
             height: 34px;
-            border-radius: 34px;
-            cursor: pointer;
-            user-select: none;
-            transition: background-color 0.3s;
             margin: 0 10px;
         }
 
@@ -89,28 +85,30 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: #aa9881; /* Beige color for switch handle */
+            background-color: #676767; /* Grey background */
             border-radius: 34px;
-            transition: transform 0.3s;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s;
         }
 
         .switch-button span:before {
             content: '';
             position: absolute;
-            top: 50%;
-            left: 5%;
-            transform: translateY(-50%);
-            width: 25px;
-            height: 25px;
-            background-color: #1e1e1e; /* Dark grey color for switch handle */
+            top: 4px;
+            left: 4px;
+            width: 26px;
+            height: 26px;
+            background-color: #aa9881; /* Beige color for switch handle */
             border-radius: 50%;
             transition: transform 0.3s;
         }
 
+        .switch-button input:checked + span {
+            background-color: #676767; /* Grey background */
+        }
+
         .switch-button input:checked + span:before {
             transform: translateX(26px);
-            background-color: #1e1e1e; /* Dark grey color for switch handle */
+            background-color: #aa9881; /* Beige color for switch handle */
         }
 
         .container {
@@ -171,12 +169,12 @@
     <button id="zeitButton">Offblock</button>
     <button id="clearButton" class="clear-button">Clear All</button>
     <div class="switch-container">
-        <span class="switch-label">UTC</span>
+        <label class="switch-label" for="timeToggle">UTC</label>
         <label class="switch-button">
             <input id="timeToggle" type="checkbox">
             <span></span>
         </label>
-        <span class="switch-label">Local Time</span>
+        <label class="switch-label" for="timeToggle">LT</label>
     </div>
 
     <script>
@@ -189,10 +187,16 @@
         const buttonLabels = ["Offblock", "Takeoff", "Landing", "Onblock"];
 
         zeitButton.addEventListener('click', () => {
-            const now = useLocalTime ? new Date() : new Date(new Date().toUTCString()); // Umstellung auf die lokale Zeit
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const timeString = `${hours}:${minutes} ${useLocalTime ? 'LT' : 'UTC'}`; // Anzeige der umgestellten Zeit.
+            const now = new Date();
+            const utcHours = String(now.getUTCHours()).padStart(2, '0');
+            const utcMinutes = String(now.getUTCMinutes()).padStart(2, '0');
+            const utcTimeString = `${utcHours}:${utcMinutes} UTC`;
+
+            const localHours = String(now.getHours()).padStart(2, '0');
+            const localMinutes = String(now.getMinutes()).padStart(2, '0');
+            const localTimeString = `${localHours}:${localMinutes} LT`;
+
+            const timeString = useLocalTime ? localTimeString : utcTimeString;
 
             const listItem = document.createElement('li');
             listItem.innerHTML = `<span>${buttonLabels[clickCount]}:</span> ${timeString}`;
