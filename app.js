@@ -7,10 +7,16 @@ let useLocalTime = false; // Variable zur Bestimmung, ob lokale Zeit verwendet w
 const buttonLabels = ["Offblock", "Takeoff", "Landing", "Onblock"];
 
 zeitButton.addEventListener('click', () => {
-    const now = useLocalTime ? new Date() : new Date(new Date().toUTCString()); // Umstellung auf die lokale Zeit
-    const hours = String(now.getHours()).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    const timeString = `${hours}:${minutes} ${useLocalTime ? 'LT' : 'UTC'}`; // Anzeige der umgestellten Zeit.
+    const now = new Date();
+    const utcHours = String(now.getUTCHours()).padStart(2, '0');
+    const utcMinutes = String(now.getUTCMinutes()).padStart(2, '0');
+    const utcTimeString = `${utcHours}:${utcMinutes} UTC`;
+
+    const localHours = String(now.getHours()).padStart(2, '0');
+    const localMinutes = String(now.getMinutes()).padStart(2, '0');
+    const localTimeString = `${localHours}:${localMinutes} LT`;
+
+    const timeString = useLocalTime ? localTimeString : utcTimeString;
 
     const listItem = document.createElement('li');
     listItem.innerHTML = `<span>${buttonLabels[clickCount]}:</span> ${timeString}`;
