@@ -8,8 +8,8 @@ body {
     justify-content: center;
     height: 100vh;
     margin: 0;
-    background: #1e1e1e; /* Dunkelgrauer Hintergrund */
-    color: #f1f1f1; /* Heller Text */
+    background: #f5f5f5; /* Heller Hintergrund */
+    color: #676767; /* Graue Schrift */
     overflow: hidden; /* Browser-UI ausblenden */
 }
 
@@ -20,8 +20,8 @@ button {
     font-size: 18px;
     border: none;
     border-radius: 5px;
-    background: #3a3a3a; /* Dunkelgraues Button-Hintergrund */
-    color: #f1f1f1; /* Heller Text */
+    background: #1e90ff; /* Blaue Buttons */
+    color: #fff; /* Weißer Text */
     cursor: pointer;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: background 0.3s;
@@ -29,7 +29,7 @@ button {
 }
 
 button:hover {
-    background: #4a4a4a; /* Helleres Grau für Hover-Effekt */
+    background: #1c86ee; /* Dunklere Blaue Farbe für Hover-Effekt */
 }
 
 .clear-button {
@@ -42,7 +42,7 @@ button:hover {
 }
 
 .switch-button {
-    background: #676767; /* Neue Farbe für den Toggle-Schalter */
+    background: #676767; /* Farbe für den Toggle-Schalter */
     position: relative;
     display: inline-block;
     width: 60px;
@@ -78,14 +78,14 @@ button:hover {
     transform: translateY(-50%);
     width: 50%;
     height: 50%;
-    background-color: #1e1e1e; /* Neue Farbe für den Schalter */
+    background-color: #1e90ff; /* Blaue Farbe für den Schalter */
     border-radius: 34px;
     transition: transform 0.3s;
 }
 
 .switch-button input:checked + span:before {
     transform: translateX(100%);
-    background-color: #676767; /* Neue Farbe für den aktiven Schalter */
+    background-color: #1c86ee; /* Dunklere Blaue Farbe für den aktiven Schalter */
 }
 
 .container {
@@ -94,11 +94,12 @@ button:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: #3a3a3a; /* Dunkelgraues Container-Hintergrund */
+    background: #fff; /* Weißer Container-Hintergrund */
     padding: 10px;
     position: relative;
     margin-bottom: 20px;
     border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 ul {
@@ -109,13 +110,13 @@ ul {
 }
 
 li {
-    background: #1e1e1e; /* Dunkelgrauer Hintergrund für Listenelemente */
+    background: #f5f5f5; /* Heller Hintergrund für Listenelemente */
     padding: 15px;
     text-align: center;
     font-size: 16px;
-    border-bottom: 1px dashed #f1f1f1; /* Gepunktete Linie */
+    border-bottom: 1px dashed #676767; /* Graue gepunktete Linie */
     margin: 0;
-    color: #f1f1f1; /* Heller Text */
+    color: #676767; /* Graue Schrift */
 }
 
 li span {
