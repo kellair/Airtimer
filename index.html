@@ -17,47 +17,67 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start; /* Align content to the top */
+            justify-content: center; /* Center content vertically and horizontally */
             height: 100vh;
             margin: 0;
-            background: #f8f8f8; /* Light grey background */
+            background: #ffffff; /* White background */
             color: #242629; /* Dark grey text color */
             overflow: hidden; /* Hide browser UI */
         }
 
         button {
-            width: 80%;
-            max-width: 400px;
             padding: 15px 30px;
             font-size: 18px;
             border: none;
             border-radius: 5px;
-            background: #3366cc; /* Blue background */
+            background-color: #3366cc; /* Blue background */
             color: #ffffff; /* White text */
             cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: background 0.3s;
             margin-bottom: 10px;
-            align-self: flex-end; /* Align buttons to the bottom right */
+            transition: background-color 0.3s;
         }
 
         button:hover {
-            background: #098ee1; /* Light blue for hover effect */
+            background-color: #004699; /* Darker blue on hover */
         }
 
-        .clear-button {
-            background: #838c99; /* Grey color for clear button */
-            color: #ffffff; /* White text */
+        .container {
+            width: 80%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f8f8f8; /* Light grey background */
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for container */
         }
 
-        .clear-button:hover {
-            background: #636c77; /* Darker grey for hover effect */
+        ul#zeitListe {
+            list-style-type: none;
+            padding: 0;
+            width: 100%;
+            margin: 0;
+            background-color: #ffffff; /* White background for list */
+        }
+
+        ul#zeitListe li {
+            padding: 15px;
+            text-align: center;
+            font-size: 16px;
+            border-bottom: 1px dashed #cccccc; /* Light grey dashed line */
+            color: #242629; /* Dark grey text color */
+        }
+
+        ul#zeitListe li:last-child {
+            border-bottom: none; /* Remove border from last item */
         }
 
         .switch-container {
             display: flex;
             align-items: center;
-            justify-content: flex-end; /* Align toggle switch to the right */
+            justify-content: center;
             width: 80%;
             max-width: 400px;
             margin-bottom: 20px;
@@ -101,7 +121,7 @@
             left: 4px;
             width: 26px;
             height: 26px;
-            background-color: #ffffff; /* White color for switch handle */
+            background-color: #ffffff; /* White handle */
             border-radius: 50%;
             transition: transform 0.3s;
         }
@@ -112,42 +132,7 @@
 
         .switch-button input:checked + span:before {
             transform: translateX(26px);
-            background-color: #ffffff; /* White color for switch handle */
-        }
-
-        .container {
-            width: 80%;
-            max-width: 400px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background: #ffffff; /* White background */
-            padding: 10px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Updated box shadow for container */
-        }
-
-        ul#zeitListe {
-            list-style-type: none;
-            padding: 0;
-            width: 100%;
-            margin: 0;
-            background: transparent; /* Ensure the background is transparent */
-        }
-
-        ul#zeitListe li {
-            background: #ffffff; /* White background for list items */
-            padding: 15px;
-            text-align: center;
-            font-size: 16px;
-            border-bottom: 1px dashed #838c99; /* Grey dashed line to simulate a receipt */
-            margin: 0;
-            color: #242629; /* Dark grey text color */
-        }
-
-        ul#zeitListe li span {
-            font-weight: bold;
+            background-color: #ffffff; /* White handle */
         }
 
         /* Prevent zooming and hide browser UI */
@@ -172,8 +157,7 @@
     <div class="container">
         <ul id="zeitListe"></ul>
     </div>
-    <button id="zeitButton">Note time</button> <!-- Changed button label -->
-    <button id="clearButton" class="clear-button">Clear All</button>
+    <button id="zeitButton">Offblock</button>
     <div class="switch-container">
         <label class="switch-label" for="timeToggle">UTC</label>
         <label class="switch-button">
@@ -185,7 +169,6 @@
 
     <script>
         const zeitButton = document.getElementById('zeitButton');
-        const clearButton = document.getElementById('clearButton');
         const switchInput = document.getElementById('timeToggle');
         const timeList = document.getElementById('zeitListe');
         let clickCount = 0;
@@ -205,15 +188,10 @@
             const timeString = useLocalTime ? localTimeString : utcTimeString;
 
             const listItem = document.createElement('li');
-            listItem.innerHTML = `<span>${buttonLabels[clickCount]}:</span> ${timeString}`;
+            listItem.textContent = `${buttonLabels[clickCount]}: ${timeString}`;
             timeList.appendChild(listItem);
 
             clickCount = (clickCount + 1) % buttonLabels.length;
-            zeitButton.textContent = "Note time"; // Update button label
-        });
-
-        clearButton.addEventListener('click', () => {
-            timeList.innerHTML = '';
         });
 
         switchInput.addEventListener('change', () => {
