@@ -87,6 +87,7 @@
             background-color: #838c99; /* Grey background */
             border-radius: 34px;
             transition: background-color 0.3s;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Schattierung hinzufügen */
         }
 
         .switch-button span:before {
@@ -119,6 +120,7 @@
             background-color: white;
             border-radius: 5px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden; /* Verstecke überlaufende gezackte Kanten */
         }
 
         .container::before,
@@ -126,18 +128,21 @@
             content: "";
             position: absolute;
             width: 100%;
-            height: 10px; /* Height of the jagged edge */
-            background: #ffffff; /* Adjust background color */
+            height: 20px; /* Höhe der gezackten Kante anpassen */
+            background: #ffffff; /* Hintergrundfarbe der gezackten Kante anpassen */
+            mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='20' viewBox='0 0 100 20'%3E%3Cpolygon points='0,20 10,10 20,20 30,10 40,20 50,10 60,20 70,10 80,20 90,10 100,20' fill='%23ffffff' /%3E%3C/svg%3E");
+            background-size: 20px 100%; /* Größe der gezackten Kante anpassen */
         }
 
         .container::before {
-            top: -10px; /* Position above the container */
-            mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='10' viewBox='0 0 100 10'%3E%3Cpolygon points='0,0 10,10 20,0 30,10 40,0 50,10 60,0 70,10 80,0 90,10 100,0' fill='%23ffffff' /%3E%3C/svg%3E");
+            top: -20px; /* Position der oberen gezackten Kante anpassen */
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1); /* Schattierung hinzufügen */
         }
 
         .container::after {
-            bottom: -10px; /* Position below the container */
-            mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='10' viewBox='0 0 100 10'%3E%3Cpolygon points='0,10 10,0 20,10 30,0 40,10 50,0 60,10 70,0 80,10 90,0 100,10' fill='%23ffffff' /%3E%3C/svg%3E");
+            bottom: -20px; /* Position der unteren gezackten Kante anpassen */
+            box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.1); /* Schattierung hinzufügen */
+            transform: scaleY(-1); /* Umkehren der unteren Kante */
         }
 
         ul {
@@ -225,16 +230,13 @@
 
         clearButton.addEventListener('click', () => {
             timeList.innerHTML = '';
-            clickCount = 0;
-            zeitButton.textContent = buttonLabels[clickCount];
         });
 
         switchInput.addEventListener('change', () => {
-            useLocalTime = switchInput.checked; // Umstellung zwischen UTC und der Lokalzeit.
-            zeitButton.textContent = buttonLabels[clickCount];
+            useLocalTime = switchInput.checked;
         });
 
-        // Service Worker registrieren
+        // Service Worker Registration
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/Airtimer/sw.js');
