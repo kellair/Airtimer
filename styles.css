@@ -34,6 +34,8 @@ button:hover {
 
 .clear-button {
     background: #838c99; /* Grey color for clear button */
+    color: #ffffff; /* White text */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Light shadow */
 }
 
 .clear-button:hover {
@@ -71,8 +73,9 @@ button:hover {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #838c99; /* Grey background */
+    background-color: #3366cc; /* Blue background */
     border-radius: 34px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Light shadow */
     transition: background-color 0.3s;
 }
 
@@ -89,7 +92,7 @@ button:hover {
 }
 
 .switch-button input:checked + span {
-    background-color: #3366cc; /* Blue background */
+    background-color: #098ee1; /* Light blue when checked */
 }
 
 .switch-button input:checked + span:before {
@@ -116,20 +119,21 @@ button:hover {
     content: '';
     display: block;
     position: absolute;
-    background: #e9eff4; /* Farbe der Abrisskante */
-    width: 100%;
-    height: 20px; /* Höhe der Abrisskante */
+    background: #098ee1; /* Light blue color for tear effect */
+    width: calc(100% - 40px); /* Adjust width as needed */
+    height: 10px; /* Height of tear effect */
     pointer-events: none;
+    z-index: -1; /* Ensure it's behind the content */
 }
 
 .container:before {
-    top: -10px; /* Position oberhalb des Containers */
-    clip-path: polygon(0 100%, 100% 100%, 100% 0, 0 0); /* Clip-Path für die obere Abrisskante */
+    top: -10px; /* Position above the container */
+    clip-path: polygon(0 100%, 100% 100%, 100% 0, 0 0); /* Clip-path for the upper tear effect */
 }
 
 .container:after {
-    bottom: -10px; /* Position unterhalb des Containers */
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); /* Clip-Path für die untere Abrisskante */
+    bottom: -10px; /* Position below the container */
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); /* Clip-path for the lower tear effect */
 }
 
 ul {
@@ -153,7 +157,7 @@ li span {
     font-weight: bold;
 }
 
-/* Verhindern von Zoom und Ausblenden der Browser-UI */
+/* Prevent zooming and hide browser UI */
 html {
     touch-action: manipulation;
     -ms-touch-action: manipulation;
@@ -165,7 +169,7 @@ html {
     -ms-touch-action: none;
 }
 
-/* Ausblenden der Browser-UI */
+/* Hide browser UI */
 body {
     overflow: hidden;
 }
