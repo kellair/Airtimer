@@ -47,7 +47,6 @@ button:hover {
 }
 
 .switch-label {
-    font-family: 'Courier Prime', monospace;
     font-size: 18px;
     margin: 0 10px;
     color: #242629; /* Dark grey text color */
@@ -109,6 +108,7 @@ button:hover {
     position: relative;
     margin-bottom: 20px;
     border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Box shadow for container */
 }
 
 ul {
@@ -147,4 +147,24 @@ html {
 /* Hide browser UI */
 body {
     overflow: hidden;
+}
+
+/* Tear effect for the top and bottom of the container */
+.container:before, .container:after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 20px;
+    background: #ffffff;
+    border-top: 1px dashed #838c99; /* Grey dashed line for tear effect */
+}
+
+.container:before {
+    top: -20px;
+}
+
+.container:after {
+    bottom: -20px;
 }
