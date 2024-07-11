@@ -20,7 +20,7 @@ button {
     font-size: 18px;
     border: none;
     border-radius: 5px;
-    background: #3366cc; /* Blue background */
+    background: #66b3ff; /* Light blue background */
     color: #ffffff; /* White text */
     cursor: pointer;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -29,7 +29,7 @@ button {
 }
 
 button:hover {
-    background: #098ee1; /* Light blue for hover effect */
+    background: #3399ff; /* Darker light blue for hover effect */
 }
 
 .clear-button {
@@ -73,7 +73,7 @@ button:hover {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #3366cc; /* Blue background */
+    background-color: #66b3ff; /* Light blue background */
     border-radius: 34px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Light shadow */
     transition: background-color 0.3s;
@@ -92,7 +92,7 @@ button:hover {
 }
 
 .switch-button input:checked + span {
-    background-color: #098ee1; /* Light blue when checked */
+    background-color: #3399ff; /* Darker light blue when checked */
 }
 
 .switch-button input:checked + span:before {
