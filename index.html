@@ -20,7 +20,7 @@
             justify-content: flex-end; /* Am unteren Bildschirmrand ausrichten */
             min-height: 100vh; /* Mindesthöhe auf die volle Bildschirmhöhe setzen */
             margin: 0;
-            background: #f8f8f8; /* Hintergrundfarbe auf #f8f8f8 geändert */
+            background: #ffffff; /* Hintergrundfarbe auf #ffffff geändert */
             color: #242629; /* Textfarbe auf Dunkelgrau geändert */
             overflow: hidden; /* Browser-UI ausblenden */
         }
@@ -32,39 +32,38 @@
             font-size: 18px;
             border: none;
             border-radius: 5px;
-            background: #098ee1; /* Hellblauer Hintergrund für Buttons */
-            color: #ffffff; /* Weiße Textfarbe für Buttons */
+            background: #3366cc; /* Blue background */
+            color: #ffffff; /* White text */
             cursor: pointer;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: background 0.3s, color 0.3s; /* Übergänge für Hintergrund und Textfarbe */
+            transition: background 0.3s;
             margin-bottom: 10px;
         }
 
         button:hover {
-            background: #3366cc; /* Dunkelblau für Hover-Effekt */
+            background: #098ee1; /* Light blue for hover effect */
         }
 
         .clear-button {
-            background: #c0c0c0; /* Helleres Grau für Clear-Button */
-            color: #ffffff; /* Weiße Textfarbe für Clear-Button */
+            background: #838c99; /* Grey color for clear button */
+            color: #ffffff; /* White text */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Light shadow */
         }
 
         .clear-button:hover {
-            background: #676767; /* Dunkleres Grau für Hover-Effekt */
+            background: #636c77; /* Darker grey for hover effect */
         }
 
         .switch-container {
             display: flex;
             align-items: center;
-            justify-content: center; /* Zentrierte Ausrichtung der Schalter */
             margin-bottom: 20px;
         }
 
         .switch-label {
-            font-family: 'Courier Prime', monospace;
             font-size: 18px;
             margin: 0 10px;
-            color: #838c99; /* Dunkelgrauer Text für Switch-Label */
+            color: #242629; /* Dark grey text color */
         }
 
         .switch-button {
@@ -86,8 +85,9 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: #098ee1; /* Hellblauer Hintergrund für Switch */
+            background-color: #3366cc; /* Blue background */
             border-radius: 34px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Light shadow */
             transition: background-color 0.3s;
         }
 
@@ -98,17 +98,18 @@
             left: 4px;
             width: 26px;
             height: 26px;
-            background-color: #ffffff; /* Weißes Handle für Switch */
+            background-color: #ffffff; /* White color for switch handle */
             border-radius: 50%;
             transition: transform 0.3s;
         }
 
         .switch-button input:checked + span {
-            background-color: #3366cc; /* Dunkleres Blau für Switch im checked-Zustand */
+            background-color: #098ee1; /* Light blue when checked */
         }
 
         .switch-button input:checked + span:before {
             transform: translateX(26px);
+            background-color: #ffffff; /* White color for switch handle */
         }
 
         .container {
@@ -117,37 +118,42 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            background: #ffffff; /* Weißer Hintergrund für Container */
+            background: #ffffff; /* White background */
             padding: 10px;
             position: relative;
             margin-bottom: 20px;
             border-radius: 5px;
-            overflow: hidden; /* Überlauf verstecken */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Schatten */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Updated box shadow for container */
+            mask-image: 
+                conic-gradient(from 135deg at top, #ffffff 0%, #ffffff 10%, transparent 11%, transparent 50%, #ffffff 51%, #ffffff 60%, transparent 61%, transparent 100%) top/18px 100%;
+            -webkit-mask: var(--mask);
+            mask: var(--mask);
+            background-size: 18px 100%; /* Size of the jagged edge */
         }
 
-        ul {
+        ul#zeitListe {
             list-style-type: none;
             padding: 0;
             width: 100%;
             margin: 0;
+            background: transparent; /* Ensure the background is transparent */
         }
 
-        li {
-            background: #ffffff; /* Weißer Hintergrund für Listenelemente */
+        ul#zeitListe li {
+            background: #ffffff; /* White background for list items */
             padding: 15px;
             text-align: center;
             font-size: 16px;
-            border-bottom: 1px dashed #cccccc; /* Gepunktete Linie */
+            border-bottom: 1px dashed #838c99; /* Grey dashed line to simulate a receipt */
             margin: 0;
-            color: #242629; /* Textfarbe auf Dunkelgrau geändert */
+            color: #242629; /* Dark grey text color */
         }
 
-        li span {
+        ul#zeitListe li span {
             font-weight: bold;
         }
 
-        /* Zoom verhindern und Browser-UI ausblenden */
+        /* Prevent zooming and hide browser UI */
         html {
             touch-action: manipulation;
             -ms-touch-action: manipulation;
@@ -159,7 +165,7 @@
             -ms-touch-action: none;
         }
 
-        /* Browser-UI ausblenden */
+        /* Hide browser UI */
         body {
             overflow: hidden;
         }
@@ -180,58 +186,6 @@
         <label class="switch-label" for="timeToggle">LT</label>
     </div>
 
-    <script>
-        const zeitButton = document.getElementById('zeitButton');
-        const clearButton = document.getElementById('clearButton');
-        const switchInput = document.getElementById('timeToggle');
-        const timeList = document.getElementById('zeitListe');
-        let clickCount = 0;
-        let useLocalTime = false; // Variable zur Bestimmung, ob lokale Zeit verwendet werden soll
-        const buttonLabels = ["Offblock", "Takeoff", "Landing", "Onblock"];
-
-        zeitButton.addEventListener('click', () => {
-            const now = new Date();
-            const utcHours = String(now.getUTCHours()).padStart(2, '0');
-            const utcMinutes = String(now.getUTCMinutes()).padStart(2, '0');
-            const utcTimeString = `${utcHours}:${utcMinutes} UTC`;
-
-            const localHours = String(now.getHours()).padStart(2, '0');
-            const localMinutes = String(now.getMinutes()).padStart(2, '0');
-            const localTimeString = `${localHours}:${localMinutes} LT`;
-
-            const timeString = useLocalTime ? localTimeString : utcTimeString;
-
-            const listItem = document.createElement('li');
-            listItem.innerHTML = `<span>${buttonLabels[clickCount]}:</span> ${timeString}`;
-            timeList.appendChild(listItem);
-
-            clickCount = (clickCount + 1) % buttonLabels.length;
-            zeitButton.textContent = buttonLabels[clickCount];
-        });
-
-        clearButton.addEventListener('click', () => {
-            timeList.innerHTML = '';
-            clickCount = 0;
-            zeitButton.textContent = buttonLabels[clickCount];
-        });
-
-        switchInput.addEventListener('change', () => {
-            useLocalTime = switchInput.checked; // Umstellung zwischen UTC und der Lokalzeit.
-            zeitButton.textContent = buttonLabels[clickCount];
-        });
-
-        // Service Worker registrieren
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/service-worker.js')
-                    .then(registration => {
-                        console.log('Service Worker registered:', registration);
-                    })
-                    .catch(error => {
-                        console.error('Service Worker registration failed:', error);
-                    });
-            });
-        }
-    </script>
+    <script src="app.js"></script>
 </body>
 </html>
