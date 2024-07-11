@@ -114,22 +114,24 @@ button:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Updated box shadow for container */
 }
 
-.container::before, .container::after {
+.container::before {
     content: '';
     position: absolute;
+    top: -10px; /* Position above the container */
+    left: 0;
+    right: 0;
     width: 100%;
-    height: 20px; /* Height of jagged edge */
-    background: #ffffff; /* Background color of jagged edge */
+    height: 20px; /* Height of tear effect */
+    background: #ffffff; /* Background color of tear effect */
     mask-image: 
-        conic-gradient(from 135deg at top, #ffffff 0%, #ffffff 10%, transparent 11%, transparent 50%, #ffffff 51%, #ffffff 60%, transparent 61%, transparent 100%) top/18px 51% repeat-x,
-        conic-gradient(from -45deg at bottom, #ffffff 0%, #ffffff 10%, transparent 11%, transparent 50%, #ffffff 51%, #ffffff 60%, transparent 61%, transparent 100%) bottom/18px 51% repeat-x;
+        conic-gradient(from 135deg at top, #ffffff 0%, #ffffff 10%, transparent 11%, transparent 50%, #ffffff 51%, #ffffff 60%, transparent 61%, transparent 100%) top/18px 100%;
     -webkit-mask: var(--mask);
     mask: var(--mask);
     background-size: 18px 100%; /* Size of the jagged edge */
-    z-index: -1; /* Set a lower z-index to position behind container */
+    z-index: 1; /* Ensure it's above the content */
 }
 
-ul {
+ul#zeitListe {
     list-style-type: none;
     padding: 0;
     width: 100%;
@@ -138,7 +140,7 @@ ul {
     overflow: hidden; /* Hide overflowing content */
 }
 
-li {
+ul#zeitListe li {
     background: #ffffff; /* White background for list items */
     padding: 15px;
     text-align: center;
@@ -148,7 +150,7 @@ li {
     color: #242629; /* Dark grey text color */
 }
 
-li span {
+ul#zeitListe li span {
     font-weight: bold;
 }
 
