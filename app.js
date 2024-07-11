@@ -6,6 +6,11 @@ let clickCount = 0;
 let useLocalTime = false; // Variable zur Bestimmung, ob lokale Zeit verwendet werden soll
 const buttonLabels = ["Offblock", "Takeoff", "Landing", "Onblock"];
 
+// Initialisierung des Labels des Zeit-Erfassen-Buttons
+function initializeZeitButtonLabel() {
+    zeitButton.textContent = buttonLabels[clickCount];
+}
+
 zeitButton.addEventListener('click', () => {
     const now = new Date();
     const utcHours = String(now.getUTCHours()).padStart(2, '0');
@@ -49,3 +54,6 @@ if ('serviceWorker' in navigator) {
             });
     });
 }
+
+// Initialisiere das Label des Zeit-Erfassen-Buttons beim Laden der Seite
+window.addEventListener('load', initializeZeitButtonLabel);
