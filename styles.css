@@ -8,9 +8,9 @@ body {
     justify-content: center;
     height: 100vh;
     margin: 0;
-    background: #ffffff; /* Weißer Hintergrund */
-    color: #242629; /* Dunkelgraue Textfarbe */
-    overflow: hidden; /* Browser-UI ausblenden */
+    background: #ffffff; /* White background */
+    color: #242629; /* Dark grey text color */
+    overflow: hidden; /* Hide browser UI */
 }
 
 button {
@@ -20,8 +20,8 @@ button {
     font-size: 18px;
     border: none;
     border-radius: 5px;
-    background: #3366cc; /* Blauer Hintergrund für Buttons */
-    color: #ffffff; /* Weiße Textfarbe für Buttons */
+    background: #3366cc; /* Blue background */
+    color: #ffffff; /* White text */
     cursor: pointer;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: background 0.3s;
@@ -29,16 +29,15 @@ button {
 }
 
 button:hover {
-    background: #098ee1; /* Hellblauer Hover-Effekt */
+    background: #098ee1; /* Light blue for hover effect */
 }
 
 .clear-button {
-    background: #676767; /* Grauer Hintergrund für Clear-Button */
-    color: #ffffff; /* Weiße Textfarbe für Clear-Button */
+    background: #838c99; /* Grey color for clear button */
 }
 
 .clear-button:hover {
-    background: #098ee1; /* Hellblauer Hover-Effekt */
+    background: #636c77; /* Darker grey for hover effect */
 }
 
 .switch-container {
@@ -50,7 +49,7 @@ button:hover {
 .switch-label {
     font-size: 18px;
     margin: 0 10px;
-    color: #838c99; /* Dunkelgraue Textfarbe für Switch-Label */
+    color: #242629; /* Dark grey text color */
 }
 
 .switch-button {
@@ -72,7 +71,7 @@ button:hover {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #676767; /* Grauer Hintergrund für Switch */
+    background-color: #838c99; /* Grey background */
     border-radius: 34px;
     transition: background-color 0.3s;
 }
@@ -84,18 +83,18 @@ button:hover {
     left: 4px;
     width: 26px;
     height: 26px;
-    background-color: #ffffff; /* Weiße Farbe für Switch-Handle */
+    background-color: #ffffff; /* White color for switch handle */
     border-radius: 50%;
     transition: transform 0.3s;
 }
 
 .switch-button input:checked + span {
-    background-color: #3366cc; /* Blauer Hintergrund für Switch bei aktiviertem Zustand */
+    background-color: #3366cc; /* Blue background */
 }
 
 .switch-button input:checked + span:before {
     transform: translateX(26px);
-    background-color: #ffffff; /* Weiße Farbe für Switch-Handle bei aktiviertem Zustand */
+    background-color: #ffffff; /* White color for switch handle */
 }
 
 .container {
@@ -104,30 +103,29 @@ button:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: white;
+    background: #ffffff; /* White background */
     padding: 10px;
     position: relative;
     margin-bottom: 20px;
     border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Schatteneffekt */
-    overflow: hidden; /* Überlauf verstecken */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Updated box shadow for container */
 }
 
 .container:before, .container:after {
     content: '';
     position: absolute;
-    width: calc(100% - 20px);
-    height: 20px;
-    background: white;
-    border-top: 1px dashed #838c99; /* Gestrichelte graue Linie für Abrisskante */
+    width: calc(100% - 40px); /* Adjust width as needed */
+    height: 20px; /* Height of tear effect */
+    background: white; /* White background */
+    border-top: 1px dashed #838c99; /* Grey dashed line for tear effect */
 }
 
 .container:before {
-    top: -20px;
+    top: -20px; /* Position above the container */
 }
 
 .container:after {
-    bottom: -20px;
+    bottom: -20px; /* Position below the container */
 }
 
 ul {
@@ -138,20 +136,20 @@ ul {
 }
 
 li {
-    background: #fff; /* Weißer Hintergrund für Listenelemente */
+    background: #ffffff; /* White background for list items */
     padding: 15px;
     text-align: center;
     font-size: 16px;
-    border-bottom: 1px dashed #333; /* Gepunktete Linie zur Simulation einer Quittung */
+    border-bottom: 1px dashed #838c99; /* Grey dashed line to simulate a receipt */
     margin: 0;
-    color: #242629; /* Dunkelgraue Textfarbe */
+    color: #242629; /* Dark grey text color */
 }
 
 li span {
     font-weight: bold;
 }
 
-/* Zoom verhindern und Browser-UI ausblenden */
+/* Prevent zooming and hide browser UI */
 html {
     touch-action: manipulation;
     -ms-touch-action: manipulation;
@@ -163,7 +161,7 @@ html {
     -ms-touch-action: none;
 }
 
-/* Browser-UI ausblenden */
+/* Hide browser UI */
 body {
     overflow: hidden;
 }
