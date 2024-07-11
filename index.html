@@ -7,11 +7,158 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="theme-color" content="#1e1e1e">
-    <title>Airtimer</title>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>AirTimer</title>
     <style>
-        /* Der vollständige CSS-Code wie oben beschrieben */
+        @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Courier Prime', monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background: #ffffff; /* White background */
+            color: #242629; /* Dark grey text color */
+            overflow: hidden; /* Hide browser UI */
+        }
+
+        button {
+            width: 80%;
+            max-width: 400px;
+            padding: 15px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            background: #3366cc; /* Blue background */
+            color: #ffffff; /* White text */
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s;
+            margin-bottom: 10px;
+        }
+
+        button:hover {
+            background: #098ee1; /* Light blue for hover effect */
+        }
+
+        .clear-button {
+            background: #838c99; /* Grey color for clear button */
+        }
+
+        .clear-button:hover {
+            background: #636c77; /* Darker grey for hover effect */
+        }
+
+        .switch-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .switch-label {
+            font-size: 18px;
+            margin: 0 10px;
+            color: #242629; /* Dark grey text color */
+        }
+
+        .switch-button {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+            margin: 0 10px;
+        }
+
+        .switch-button input {
+            display: none;
+        }
+
+        .switch-button span {
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #838c99; /* Grey background */
+            border-radius: 34px;
+            transition: background-color 0.3s;
+        }
+
+        .switch-button span:before {
+            content: '';
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            width: 26px;
+            height: 26px;
+            background-color: #ffffff; /* White color for switch handle */
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+
+        .switch-button input:checked + span {
+            background-color: #3366cc; /* Blue background */
+        }
+
+        .switch-button input:checked + span:before {
+            transform: translateX(26px);
+            background-color: #ffffff; /* White color for switch handle */
+        }
+
+        .container {
+            width: 80%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #ffffff;
+            padding: 10px;
+            position: relative;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            width: 100%;
+            margin: 0;
+        }
+
+        li {
+            background: #ffffff; /* White background for list items */
+            padding: 15px;
+            text-align: center;
+            font-size: 16px;
+            border-bottom: 1px dashed #838c99; /* Grey dashed line to simulate a receipt */
+            margin: 0;
+            color: #242629; /* Dark grey text color */
+        }
+
+        li span {
+            font-weight: bold;
+        }
+
+        /* Prevent zooming and hide browser UI */
+        html {
+            touch-action: manipulation;
+            -ms-touch-action: manipulation;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -ms-content-zooming: none;
+            -ms-touch-action: none;
+        }
+
+        /* Hide browser UI */
+        body {
+            overflow: hidden;
+        }
     </style>
 </head>
 <body>
@@ -20,10 +167,14 @@
     </div>
     <button id="zeitButton">Offblock</button>
     <button id="clearButton" class="clear-button">Clear All</button>
-    <label class="switch-button">
-        <input id="timeToggle" type="checkbox">
-        <span></span>
-    </label>
+    <div class="switch-container">
+        <label class="switch-label" for="timeToggle">UTC</label>
+        <label class="switch-button">
+            <input id="timeToggle" type="checkbox">
+            <span></span>
+        </label>
+        <label class="switch-label" for="timeToggle">LT</label>
+    </div>
 
     <script>
         const zeitButton = document.getElementById('zeitButton');
@@ -36,9 +187,15 @@
 
         zeitButton.addEventListener('click', () => {
             const now = new Date();
-            const hours = useLocalTime ? now.getHours() : now.getUTCHours();
-            const minutes = now.getMinutes();
-            const timeString = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')} ${useLocalTime ? 'LT' : 'UTC'}`;
+            const utcHours = String(now.getUTCHours()).padStart(2, '0');
+            const utcMinutes = String(now.getUTCMinutes()).padStart(2, '0');
+            const utcTimeString = `${utcHours}:${utcMinutes} UTC`;
+
+            const localHours = String(now.getHours()).padStart(2, '0');
+            const localMinutes = String(now.getMinutes()).padStart(2, '0');
+            const localTimeString = `${localHours}:${localMinutes} LT`;
+
+            const timeString = useLocalTime ? localTimeString : utcTimeString;
 
             const listItem = document.createElement('li');
             listItem.innerHTML = `<span>${buttonLabels[clickCount]}:</span> ${timeString}`;
@@ -55,13 +212,8 @@
         });
 
         switchInput.addEventListener('change', () => {
-            useLocalTime = switchInput.checked; // Umschalten zwischen UTC und lokaler Zeit
+            useLocalTime = switchInput.checked; // Umstellung zwischen UTC und der Lokalzeit.
             zeitButton.textContent = buttonLabels[clickCount];
-            if (useLocalTime) {
-                switchInput.nextElementSibling.textContent = 'Local Time'; // Anzeige der lokalen Zeit
-            } else {
-                switchInput.nextElementSibling.textContent = 'UTC'; // Anzeige der UTC-Zeit
-            }
         });
 
         // Service Worker registrieren
