@@ -17,8 +17,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            height: 100vh;
+            justify-content: flex-end; /* Am unteren Bildschirmrand ausrichten */
+            min-height: 100vh; /* Mindesthöhe auf die volle Bildschirmhöhe setzen */
             margin: 0;
             background: #f8f8f8; /* Hintergrundfarbe auf #f8f8f8 geändert */
             color: #242629; /* Textfarbe auf Dunkelgrau geändert */
@@ -32,32 +32,32 @@
             font-size: 18px;
             border: none;
             border-radius: 5px;
-            background: #3366cc; /* Blauer Hintergrund für Buttons */
+            background: #098ee1; /* Hellblauer Hintergrund für Buttons */
             color: #ffffff; /* Weiße Textfarbe für Buttons */
             cursor: pointer;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: background 0.3s;
+            transition: background 0.3s, color 0.3s; /* Übergänge für Hintergrund und Textfarbe */
             margin-bottom: 10px;
         }
 
         button:hover {
-            background: #098ee1; /* Hellblau für Hover-Effekt */
+            background: #3366cc; /* Dunkelblau für Hover-Effekt */
         }
 
         .clear-button {
-            background: #676767; /* Grauer Hintergrund für Clear-Button */
+            background: #c0c0c0; /* Helleres Grau für Clear-Button */
             color: #ffffff; /* Weiße Textfarbe für Clear-Button */
         }
 
         .clear-button:hover {
-            background: #098ee1; /* Hellblau für Hover-Effekt */
+            background: #676767; /* Dunkleres Grau für Hover-Effekt */
         }
 
         .switch-container {
             display: flex;
             align-items: center;
-            margin-bottom: 20px;
             justify-content: center; /* Zentrierte Ausrichtung der Schalter */
+            margin-bottom: 20px;
         }
 
         .switch-label {
@@ -86,7 +86,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: #3366cc; /* Blauer Hintergrund für Switch */
+            background-color: #098ee1; /* Hellblauer Hintergrund für Switch */
             border-radius: 34px;
             transition: background-color 0.3s;
         }
@@ -104,7 +104,7 @@
         }
 
         .switch-button input:checked + span {
-            background-color: #098ee1; /* Hellblau für Switch im checked-Zustand */
+            background-color: #3366cc; /* Dunkleres Blau für Switch im checked-Zustand */
         }
 
         .switch-button input:checked + span:before {
