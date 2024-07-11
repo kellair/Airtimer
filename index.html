@@ -17,10 +17,10 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start; /* Align content to the top */
             height: 100vh;
             margin: 0;
-            background: #ffffff; /* White background */
+            background: #f8f8f8; /* Light grey background */
             color: #242629; /* Dark grey text color */
             overflow: hidden; /* Hide browser UI */
         }
@@ -38,6 +38,7 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             transition: background 0.3s;
             margin-bottom: 10px;
+            align-self: flex-end; /* Align buttons to the bottom right */
         }
 
         button:hover {
@@ -46,7 +47,7 @@
 
         .clear-button {
             background: #838c99; /* Grey color for clear button */
-            color: #ffffff; /* White text color for clear button */
+            color: #ffffff; /* White text */
         }
 
         .clear-button:hover {
@@ -56,6 +57,9 @@
         .switch-container {
             display: flex;
             align-items: center;
+            justify-content: flex-end; /* Align toggle switch to the right */
+            width: 80%;
+            max-width: 400px;
             margin-bottom: 20px;
         }
 
@@ -84,10 +88,10 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: #838c99; /* Grey background */
+            background-color: #3366cc; /* Blue background */
             border-radius: 34px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Light shadow */
             transition: background-color 0.3s;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Schattierung hinzufügen */
         }
 
         .switch-button span:before {
@@ -103,7 +107,7 @@
         }
 
         .switch-button input:checked + span {
-            background-color: #3366cc; /* Blue background */
+            background-color: #098ee1; /* Light blue when checked */
         }
 
         .switch-button input:checked + span:before {
@@ -112,47 +116,27 @@
         }
 
         .container {
-            position: relative;
             width: 80%;
             max-width: 400px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #ffffff; /* White background */
+            padding: 10px;
+            margin-bottom: 20px;
             border-radius: 5px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            overflow: hidden; /* Verstecke überlaufende gezackte Kanten */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Updated box shadow for container */
         }
 
-        .container::before,
-        .container::after {
-            content: "";
-            position: absolute;
-            width: 100%;
-            height: 20px; /* Höhe der gezackten Kante anpassen */
-            background: #ffffff; /* Hintergrundfarbe der gezackten Kante anpassen */
-            mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='20' viewBox='0 0 100 20'%3E%3Cpolygon points='0,20 10,10 20,20 30,10 40,20 50,10 60,20 70,10 80,20 90,10 100,20' fill='%23ffffff' /%3E%3C/svg%3E");
-            background-size: 20px 100%; /* Größe der gezackten Kante anpassen */
-        }
-
-        .container::before {
-            top: -20px; /* Position der oberen gezackten Kante anpassen */
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1); /* Schattierung hinzufügen */
-        }
-
-        .container::after {
-            bottom: -20px; /* Position der unteren gezackten Kante anpassen */
-            box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.1); /* Schattierung hinzufügen */
-            transform: scaleY(-1); /* Umkehren der unteren Kante */
-        }
-
-        ul {
+        ul#zeitListe {
             list-style-type: none;
             padding: 0;
             width: 100%;
             margin: 0;
+            background: transparent; /* Ensure the background is transparent */
         }
 
-        li {
+        ul#zeitListe li {
             background: #ffffff; /* White background for list items */
             padding: 15px;
             text-align: center;
@@ -162,7 +146,7 @@
             color: #242629; /* Dark grey text color */
         }
 
-        li span {
+        ul#zeitListe li span {
             font-weight: bold;
         }
 
@@ -188,7 +172,7 @@
     <div class="container">
         <ul id="zeitListe"></ul>
     </div>
-    <button id="zeitButton">AirTimer</button>
+    <button id="zeitButton">Note time</button> <!-- Changed button label -->
     <button id="clearButton" class="clear-button">Clear All</button>
     <div class="switch-container">
         <label class="switch-label" for="timeToggle">UTC</label>
@@ -225,7 +209,7 @@
             timeList.appendChild(listItem);
 
             clickCount = (clickCount + 1) % buttonLabels.length;
-            zeitButton.textContent = buttonLabels[clickCount];
+            zeitButton.textContent = "Note time"; // Update button label
         });
 
         clearButton.addEventListener('click', () => {
