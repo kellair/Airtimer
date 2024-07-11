@@ -7,8 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="theme-color" content="#1e1e1e">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <title>Airtimer</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap');
@@ -21,8 +20,8 @@
             justify-content: center;
             height: 100vh;
             margin: 0;
-            background: #E0E0E0; /* Light grey background similar to Swiss website */
-            color: #333; /* Darker text color for better readability */
+            background: #1e1e1e; /* Dark grey background */
+            color: #aa9881; /* Beige text color */
             overflow: hidden; /* Hide browser UI */
         }
 
@@ -33,8 +32,8 @@
             font-size: 18px;
             border: none;
             border-radius: 5px;
-            background: #D52B1E; /* Swiss red */
-            color: white;
+            background: #676767; /* Grey background */
+            color: #aa9881; /* Beige text */
             cursor: pointer;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             transition: background 0.3s;
@@ -42,28 +41,37 @@
         }
 
         button:hover {
-            background: #B12419; /* Darker red for hover effect */
+            background: #aa9881; /* Beige for hover effect */
+            color: #1e1e1e; /* Dark grey text */
         }
 
         .clear-button {
-            background: #848884; /* Grey color for clear button */
+            background: #676767; /* Grey color for clear button */
         }
 
         .clear-button:hover {
-            background: #666; /* Darker grey for hover effect */
+            background: #aa9881; /* Beige for hover effect */
+            color: #1e1e1e; /* Dark grey text */
+        }
+
+        .switch-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .switch-label {
+            font-size: 18px;
+            margin: 0 10px;
+            color: #aa9881; /* Beige text color */
         }
 
         .switch-button {
-            background: #1E8BD5; /* Blue color for switch button */
             position: relative;
             display: inline-block;
             width: 60px;
             height: 34px;
             margin: 0 10px;
-            border-radius: 34px;
-            cursor: pointer;
-            user-select: none;
-            transition: background-color 0.3s;
         }
 
         .switch-button input {
@@ -77,27 +85,30 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: white;
+            background-color: #676767; /* Grey background */
             border-radius: 34px;
-            transition: transform 0.3s;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s;
         }
 
         .switch-button span:before {
             content: '';
             position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 50%;
-            height: 50%;
-            background-color: #D52B1E; /* Swiss red */
-            border-radius: 34px;
+            top: 4px;
+            left: 4px;
+            width: 26px;
+            height: 26px;
+            background-color: #aa9881; /* Beige color for switch handle */
+            border-radius: 50%;
             transition: transform 0.3s;
         }
 
+        .switch-button input:checked + span {
+            background-color: #676767; /* Grey background */
+        }
+
         .switch-button input:checked + span:before {
-            transform: translateX(100%);
-            background-color: #1E8BD5; /* Blue color for switch button */
+            transform: translateX(26px);
+            background-color: #aa9881; /* Beige color for switch handle */
         }
 
         .container {
@@ -131,7 +142,6 @@
 
         li span {
             font-weight: bold;
-            color: #1e1e1e; /* Dunkelgrau für die Beschriftung */
         }
 
         /* Prevent zooming and hide browser UI */
@@ -158,10 +168,14 @@
     </div>
     <button id="zeitButton">Offblock</button>
     <button id="clearButton" class="clear-button">Clear All</button>
-    <label class="switch-button">
-        <input id="timeToggle" type="checkbox">
-        <span></span>
-    </label>
+    <div class="switch-container">
+        <label class="switch-label" for="timeToggle">UTC</label>
+        <label class="switch-button">
+            <input id="timeToggle" type="checkbox">
+            <span></span>
+        </label>
+        <label class="switch-label" for="timeToggle">LT</label>
+    </div>
 
     <script>
         const zeitButton = document.getElementById('zeitButton');
@@ -173,10 +187,16 @@
         const buttonLabels = ["Offblock", "Takeoff", "Landing", "Onblock"];
 
         zeitButton.addEventListener('click', () => {
-            const now = useLocalTime ? new Date() : new Date(Date.now() + new Date().getTimezoneOffset() * 60000); // Umstellung auf die lokale Zeit
-            const hours = String(now.getUTCHours()).padStart(2, '0');
-            const minutes = String(now.getUTCMinutes()).padStart(2, '0');
-            const timeString = `${hours}:${minutes} ${useLocalTime ? 'LT' : 'UTC'}`; // Anzeige der umgestellten Zeit.
+            const now = new Date();
+            const utcHours = String(now.getUTCHours()).padStart(2, '0');
+            const utcMinutes = String(now.getUTCMinutes()).padStart(2, '0');
+            const utcTimeString = `${utcHours}:${utcMinutes} UTC`;
+
+            const localHours = String(now.getHours()).padStart(2, '0');
+            const localMinutes = String(now.getMinutes()).padStart(2, '0');
+            const localTimeString = `${localHours}:${localMinutes} LT`;
+
+            const timeString = useLocalTime ? localTimeString : utcTimeString;
 
             const listItem = document.createElement('li');
             listItem.innerHTML = `<span>${buttonLabels[clickCount]}:</span> ${timeString}`;
@@ -195,11 +215,6 @@
         switchInput.addEventListener('change', () => {
             useLocalTime = switchInput.checked; // Umstellung zwischen UTC und der Lokalzeit.
             zeitButton.textContent = buttonLabels[clickCount];
-            if (useLocalTime) {
-                switchInput.nextElementSibling.textContent = 'Local Time'; // Anzeige der Lokalzeit.
-            } else {
-                switchInput.nextElementSibling.textContent = 'UTC'; // Anzeige der UTC-Zeit.
-            }
         });
 
         // Service Worker registrieren
